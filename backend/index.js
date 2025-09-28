@@ -61,9 +61,9 @@ app.post("/todos",async(req,res)=>{
             completed: completed || false
         })
         const saveTodo = await newTodo.save();
-        return res.send(201).json(saveTodo)
+        return res.json(saveTodo)
     }catch(err){
-        return res.status(500).json({
+        return res.json({
             message:"error in creating"
         })
     }
