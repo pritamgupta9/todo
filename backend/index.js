@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const cors = require("cors")
-
+const path = require("path");
 const app = express();
 const port =4000;
 
@@ -10,7 +10,7 @@ app.use(cors())
 app.use(bodyParser.json());
 
 
-mongoose.connect("mongodb://localhost:27017/").then(()=>console.log("mongo connected")
+mongoose.connect("mongodb+srv://preetam:preetam@cluster0.wg3g3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(()=>console.log("mongo connected")
 ).catch((err)=>console.log(err)
 )
 
@@ -103,6 +103,19 @@ app.delete("/todos/:id",async (req,res)=>{
         res.json({message:"ckdmcd"})
     }
 })
+
+
+
+const frontendPath = path.resolve(__dirname, "../frontend/dist");
+console.log(frontendPath);
+
+app.use(express.static(frontendPath));
+
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
+});
+
 
 app.listen(port,()=>{
     console.log("server running on 4000")
